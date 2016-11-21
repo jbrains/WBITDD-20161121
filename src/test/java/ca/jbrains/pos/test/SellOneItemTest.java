@@ -3,6 +3,9 @@ package ca.jbrains.pos.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SellOneItemTest {
     @Test
     public void productFound() throws Exception {
@@ -57,11 +60,14 @@ public class SellOneItemTest {
                 return;
             }
 
-            // REFACTOR It looks like this wants to be a lookup table
-            if ("12345".equals(barcode))
-                display.setText("EUR 7.50");
-            else if ("23456".equals(barcode))
-                display.setText("EUR 12.95");
+            final Map<String, String> pricesByBarcode = new HashMap<String, String>() {{
+                put("12345", "EUR 7.50");
+                put("23456", "EUR 12.95");
+            }};
+
+            final String priceAsText = pricesByBarcode.get(barcode);
+            if (priceAsText != null)
+                display.setText(priceAsText);
             else
                 display.setText(String.format("Product not found for %s", barcode));
         }
