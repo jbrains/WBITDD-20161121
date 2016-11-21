@@ -34,6 +34,16 @@ public class SellOneItemTest {
         Assert.assertEquals("Product not found for 99999", display.getText());
     }
 
+    @Test
+    public void emptyBarcode() throws Exception {
+        final Display display = new Display();
+        final Sale sale = new Sale(display);
+
+        sale.onBarcode("");
+
+        Assert.assertEquals("Scanning error: empty barcode", display.getText());
+    }
+
     public static class Sale {
         private Display display;
 
@@ -42,6 +52,11 @@ public class SellOneItemTest {
         }
 
         public void onBarcode(String barcode) {
+            if ("".equals(barcode)) {
+                display.setText("Scanning error: empty barcode");
+                return;
+            }
+
             // REFACTOR It looks like this wants to be a lookup table
             if ("12345".equals(barcode))
                 display.setText("EUR 7.50");
