@@ -32,6 +32,7 @@ public class SellOneItemTest {
         }
 
         public void onBarcode(String barcode) {
+            // REFACTOR It looks like this wants to be a lookup table
             if ("12345".equals(barcode))
                 display.setText("EUR 7.50");
             else
