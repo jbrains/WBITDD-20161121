@@ -1,7 +1,6 @@
 package ca.jbrains.pos.test;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SellOneItemTest {
@@ -15,7 +14,6 @@ public class SellOneItemTest {
         Assert.assertEquals("EUR 7.50", display.getText());
     }
 
-    @Ignore("Work in process")
     @Test
     public void anotherProductFound() throws Exception {
         final Display display = new Display();
@@ -34,7 +32,10 @@ public class SellOneItemTest {
         }
 
         public void onBarcode(String barcode) {
-            display.setText("EUR 7.50");
+            if ("12345".equals(barcode))
+                display.setText("EUR 7.50");
+            else
+                display.setText("EUR 12.95");
         }
     }
 
