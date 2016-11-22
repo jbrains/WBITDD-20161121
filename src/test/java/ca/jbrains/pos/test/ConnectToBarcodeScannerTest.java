@@ -15,7 +15,7 @@ import java.util.List;
 public class ConnectToBarcodeScannerTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    
+
     @Mock
     private BarcodeScannedListener barcodeScannedListener;
 
@@ -115,7 +115,7 @@ public class ConnectToBarcodeScannerTest {
     }
 
     public void consumeTextCommand(Reader commandSource) {
-        new ConsumeTextCommands(new ParseCommands(), new InterpretCommands(barcodeScannedListener))
+        new ConsumeTextCommands(new ParseCommandsByFilteringWhitespace(), new InterpretAllCommandsAsBarcodes(barcodeScannedListener))
                 .consumeTextCommands(commandSource);
     }
 }

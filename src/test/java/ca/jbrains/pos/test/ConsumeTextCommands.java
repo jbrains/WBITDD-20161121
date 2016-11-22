@@ -4,16 +4,16 @@ import java.io.Reader;
 
 public class ConsumeTextCommands {
 
-    private ParseCommands parseCommands;
-    private InterpretCommands interpretCommands;
+    private ParseCommandsByFilteringWhitespace parseCommandsByFilteringWhitespace;
+    private InterpretAllCommandsAsBarcodes interpretAllCommandsAsBarcodes;
 
-    public ConsumeTextCommands(ParseCommands parseCommands, InterpretCommands interpretCommands) {
-        this.parseCommands = parseCommands;
-        this.interpretCommands = interpretCommands;
+    public ConsumeTextCommands(ParseCommandsByFilteringWhitespace parseCommandsByFilteringWhitespace, InterpretAllCommandsAsBarcodes interpretAllCommandsAsBarcodes) {
+        this.parseCommandsByFilteringWhitespace = parseCommandsByFilteringWhitespace;
+        this.interpretAllCommandsAsBarcodes = interpretAllCommandsAsBarcodes;
     }
 
     public void consumeTextCommands(Reader commandSource) {
-        this.parseCommands.parseCommands(commandSource)
-                .forEach(this.interpretCommands::interpretCommand);
+        this.parseCommandsByFilteringWhitespace.parseCommands(commandSource)
+                .forEach(this.interpretAllCommandsAsBarcodes::interpretCommand);
     }
 }

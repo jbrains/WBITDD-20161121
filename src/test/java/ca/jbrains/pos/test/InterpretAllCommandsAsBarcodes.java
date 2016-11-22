@@ -1,9 +1,9 @@
 package ca.jbrains.pos.test;
 
-public class InterpretCommands {
+public class InterpretAllCommandsAsBarcodes {
     private BarcodeScannedListener barcodeScannedListener;
 
-    public InterpretCommands(BarcodeScannedListener barcodeScannedListener) {
+    public InterpretAllCommandsAsBarcodes(BarcodeScannedListener barcodeScannedListener) {
         this.barcodeScannedListener = barcodeScannedListener;
     }
 
