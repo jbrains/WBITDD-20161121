@@ -87,12 +87,37 @@ public class ConnectToBarcodeScannerTest {
         ));
     }
 
+    @Test
+    public void ignoreWhitespaceInCommands() throws Exception {
+        context.checking(new Expectations() {{
+            oneOf(barcodeScannedListener).onBarcode("::barcode 1::");
+            oneOf(barcodeScannedListener).onBarcode("::barcode\t2::");
+            oneOf(barcodeScannedListener).onBarcode("::barcode 3::");
+            oneOf(barcodeScannedListener).onBarcode("::barcode\t\t4::");
+        }});
+
+        consumeListOfTextCommands(Arrays.asList(
+                "     \t       ",
+                "          ::barcode 1::     ",
+                "     \t   ",
+                "  ::barcode\t2::\t\t   ",
+                " ",
+                "    ",
+                " ::barcode 3::\t",
+                "",
+                "\t::barcode\t\t4::    ",
+                "\t\t\t",
+                ""
+        ));
+    }
+
     private void consumeListOfTextCommands(List<String> textCommands) {
         consumeTextCommand(new StringReader(unlines(textCommands)));
     }
 
     private void consumeTextCommand(Reader commandSource) {
         new BufferedReader(commandSource).lines()
+                .map(String::trim)
                 .filter((line) -> !line.isEmpty())
                 .forEach(barcodeScannedListener::onBarcode);
     }
