@@ -48,7 +48,7 @@ public class DisplayToWriterTest {
         }
 
         public void displayScannedEmptyBarcodeMessage() {
-            out.println("Scanning error: empty barcode");
+            out.println(String.format("Scanning error: empty barcode"));
         }
 
         public void displayProductNotFoundMessage(String barcodeNotFound) {
