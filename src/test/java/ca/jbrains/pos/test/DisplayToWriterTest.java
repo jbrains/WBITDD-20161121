@@ -19,6 +19,15 @@ public class DisplayToWriterTest {
                 lines(canvas.toString()));
     }
 
+    @Test
+    public void productNotFoundMessage() throws Exception {
+        final StringWriter canvas = new StringWriter();
+        new WriterDisplay(new PrintWriter(canvas)).displayProductNotFoundMessage("99999");
+        Assert.assertEquals(
+                Collections.singletonList("Product not found for 99999"),
+                lines(canvas.toString()));
+    }
+
     public static class WriterDisplay {
         private final PrintWriter out;
 
@@ -28,6 +37,10 @@ public class DisplayToWriterTest {
 
         public void displayScannedEmptyBarcodeMessage() {
             out.println("Scanning error: empty barcode");
+        }
+
+        public void displayProductNotFoundMessage(String barcodeNotFound) {
+            out.println(String.format("Product not found for %s", "99999"));
         }
     }
 
