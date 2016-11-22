@@ -30,6 +30,10 @@ public class DisplayToWriterTest {
 
     @Test
     public void price() throws Exception {
+        // This test shows how "format price" fits into the "flow"
+        // of "display price", even if that "flow" is quite small.
+        // We have put the detailed tests for formatting a price
+        // elsewhere.
         final StringWriter canvas = new StringWriter();
         new WriterDisplay(new PrintWriter(canvas)).displayPrice(Price.cents(750));
         Assert.assertEquals(
