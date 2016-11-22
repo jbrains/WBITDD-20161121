@@ -20,6 +20,12 @@ public class ConnectToBarcodeScannerTest {
     @Mock
     private BarcodeScannedListener barcodeScannedListener;
 
+    // REFACTOR Isn't there a library function for this?!
+    // RISK Should there be a trailing line separator here?
+    public static String unlines(List<String> linesOfText) {
+        return String.join(System.lineSeparator(), linesOfText);
+    }
+
     @Test
     public void oneBarcodeCommand() throws Exception {
         context.checking(new Expectations() {{
@@ -29,17 +35,22 @@ public class ConnectToBarcodeScannerTest {
         consumeTextCommand(new StringReader(unlines(Collections.singletonList("::barcode::"))));
     }
 
+    @Test
+    public void noBarcodeCommands() throws Exception {
+        context.checking(new Expectations() {{
+            never(barcodeScannedListener);
+        }});
+
+        consumeTextCommand(new StringReader(unlines(Collections.emptyList())));
+    }
+
     private void consumeTextCommand(Reader commandSource) throws IOException {
-        barcodeScannedListener.onBarcode(new BufferedReader(commandSource).readLine());
+        final String line = new BufferedReader(commandSource).readLine();
+        if (line != null)
+            barcodeScannedListener.onBarcode(line);
     }
 
     public interface BarcodeScannedListener {
         void onBarcode(String barcode);
-    }
-
-    // REFACTOR Isn't there a library function for this?!
-    // RISK Should there be a trailing line separator here?
-    public static String unlines(List<String> linesOfText) {
-        return String.join(System.lineSeparator(), linesOfText);
     }
 }
