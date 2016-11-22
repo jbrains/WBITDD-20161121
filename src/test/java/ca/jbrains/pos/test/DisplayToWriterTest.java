@@ -1,13 +1,12 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.text.Text;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class DisplayToWriterTest {
     @Test
@@ -16,7 +15,7 @@ public class DisplayToWriterTest {
         new WriterDisplay(new PrintWriter(canvas)).displayScannedEmptyBarcodeMessage();
         Assert.assertEquals(
                 Collections.singletonList("Scanning error: empty barcode"),
-                lines(canvas.toString()));
+                Text.lines(canvas.toString()));
     }
 
     @Test
@@ -25,7 +24,7 @@ public class DisplayToWriterTest {
         new WriterDisplay(new PrintWriter(canvas)).displayProductNotFoundMessage("99999");
         Assert.assertEquals(
                 Collections.singletonList("Product not found for 99999"),
-                lines(canvas.toString()));
+                Text.lines(canvas.toString()));
     }
 
     @Test
@@ -38,7 +37,7 @@ public class DisplayToWriterTest {
         new WriterDisplay(new PrintWriter(canvas)).displayPrice(Price.cents(750));
         Assert.assertEquals(
                 Collections.singletonList("EUR 7.50"),
-                lines(canvas.toString()));
+                Text.lines(canvas.toString()));
     }
 
     public static class WriterDisplay {
@@ -61,8 +60,4 @@ public class DisplayToWriterTest {
         }
     }
 
-    // REFACTOR Isn't there a library function for this?!
-    public static List<String> lines(String text) {
-        return Arrays.asList(text.split(System.lineSeparator()));
-    }
 }
