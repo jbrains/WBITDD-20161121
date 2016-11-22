@@ -12,6 +12,8 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class ConnectToBarcodeScannerTest {
@@ -117,8 +119,15 @@ public class ConnectToBarcodeScannerTest {
     }
 
     public void consumeTextCommand(Reader commandSource) {
-        parseCommands(commandSource)
-                .forEach(this::interpretCommand);
+        consumeTextCommands(this::parseCommands, this::interpretCommand, commandSource);
+    }
+
+    public void consumeTextCommands(
+            Function<Reader, Stream<String>> parser,
+            Consumer<String> interpreter,
+            Reader commandSource) {
+
+        parser.apply(commandSource).forEach(interpreter);
     }
 
     public Stream<String> parseCommands(Reader commandSource) {
