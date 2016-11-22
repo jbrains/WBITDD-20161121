@@ -9,20 +9,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DisplayToConsoleTest {
+public class DisplayToWriterTest {
     @Test
     public void emptyBarcode() throws Exception {
         final StringWriter canvas = new StringWriter();
-        new ConsoleDisplay(new PrintWriter(canvas)).displayScannedEmptyBarcodeMessage();
+        new WriterDisplay(new PrintWriter(canvas)).displayScannedEmptyBarcodeMessage();
         Assert.assertEquals(
                 Collections.singletonList("Scanning error: empty barcode"),
                 lines(canvas.toString()));
     }
 
-    public static class ConsoleDisplay {
+    public static class WriterDisplay {
         private final PrintWriter out;
 
-        public ConsoleDisplay(PrintWriter out) {
+        public WriterDisplay(PrintWriter out) {
             this.out = out;
         }
 
