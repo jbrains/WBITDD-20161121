@@ -32,7 +32,7 @@ public class ConnectToBarcodeScannerTest {
             oneOf(barcodeScannedListener).onBarcode("::barcode::");
         }});
 
-        consumeTextCommand(new StringReader(unlines(Collections.singletonList("::barcode::"))));
+        consumeListOfTextCommands(Collections.singletonList("::barcode::"));
     }
 
     @Test
@@ -41,7 +41,11 @@ public class ConnectToBarcodeScannerTest {
             never(barcodeScannedListener);
         }});
 
-        consumeTextCommand(new StringReader(unlines(Collections.emptyList())));
+        consumeListOfTextCommands(Collections.emptyList());
+    }
+
+    private void consumeListOfTextCommands(List<String> textCommands) throws IOException {
+        consumeTextCommand(new StringReader(unlines(textCommands)));
     }
 
     private void consumeTextCommand(Reader commandSource) throws IOException {
