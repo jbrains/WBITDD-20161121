@@ -6,7 +6,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
@@ -111,11 +110,10 @@ public class ConnectToBarcodeScannerTest {
     }
 
     private void consumeListOfTextCommands(List<String> textCommands) {
-        consumeTextCommand(new StringReader(unlines(textCommands)));
-    }
-
-    public void consumeTextCommand(Reader commandSource) {
-        new ConsumeTextCommands(new ParseCommandsByFilteringWhitespace(), new InterpretAllCommandsAsBarcodes(barcodeScannedListener))
-                .consumeTextCommands(commandSource);
+        new ConsumeTextCommands(
+                new ParseCommandsByFilteringWhitespace(),
+                new InterpretAllCommandsAsBarcodes(barcodeScannedListener))
+                .consumeTextCommands(
+                        new StringReader(unlines(textCommands)));
     }
 }
