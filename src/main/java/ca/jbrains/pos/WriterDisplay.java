@@ -5,7 +5,7 @@ import ca.jbrains.pos.Price;
 
 import java.io.PrintWriter;
 
-public class WriterDisplay {
+public class WriterDisplay implements Display {
     private final PrintWriter out;
 
     public WriterDisplay(PrintWriter out) {
@@ -17,7 +17,7 @@ public class WriterDisplay {
     }
 
     public void displayProductNotFoundMessage(String barcodeNotFound) {
-        out.println(String.format("Product not found for %s", "99999"));
+        out.println(String.format("Product not found for %s", barcodeNotFound));
     }
 
     public void displayPrice(Price price) {
