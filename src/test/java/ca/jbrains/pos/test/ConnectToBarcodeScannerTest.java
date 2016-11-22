@@ -6,20 +6,16 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 public class ConnectToBarcodeScannerTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-
+    
     @Mock
     private BarcodeScannedListener barcodeScannedListener;
 
@@ -119,32 +115,7 @@ public class ConnectToBarcodeScannerTest {
     }
 
     public void consumeTextCommand(Reader commandSource) {
-        consumeTextCommands(this::parseCommands, this::interpretCommand, commandSource);
-    }
-
-    public void consumeTextCommands(
-            Function<Reader, Stream<String>> parser,
-            Consumer<String> interpreter,
-            Reader commandSource) {
-
-        parser.apply(commandSource).forEach(interpreter);
-    }
-
-    public Stream<String> parseCommands(Reader commandSource) {
-        return sanitizeCommands(new BufferedReader(commandSource).lines());
-    }
-
-    public void interpretCommand(String commandText) {
-        barcodeScannedListener.onBarcode(commandText);
-    }
-
-    public Stream<String> sanitizeCommands(Stream<String> commandStream) {
-        return commandStream
-                .map(String::trim)
-                .filter((line) -> !line.isEmpty());
-    }
-
-    public interface BarcodeScannedListener {
-        void onBarcode(String barcode);
+        new ConsumeTextCommands(new ParseCommands(), new InterpretCommands(barcodeScannedListener))
+                .consumeTextCommands(commandSource);
     }
 }
