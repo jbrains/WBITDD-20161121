@@ -53,7 +53,7 @@ public class DisplayToWriterTest {
         }
 
         public void displayPrice(Price price) {
-            out.println("EUR 7.50");
+            out.println(String.format("EUR %.2f", price.euro()));
         }
     }
 
