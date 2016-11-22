@@ -57,7 +57,7 @@ public class DisplayToWriterTest {
         }
 
         public void displayPrice(Price price) {
-            out.println(String.format("EUR %.2f", price.euro()));
+            out.println(new EnglishLanguageMessageFormat().format(price));
         }
     }
 
