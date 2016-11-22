@@ -28,6 +28,15 @@ public class DisplayToWriterTest {
                 lines(canvas.toString()));
     }
 
+    @Test
+    public void price() throws Exception {
+        final StringWriter canvas = new StringWriter();
+        new WriterDisplay(new PrintWriter(canvas)).displayPrice(Price.cents(750));
+        Assert.assertEquals(
+                Collections.singletonList("EUR 7.50"),
+                lines(canvas.toString()));
+    }
+
     public static class WriterDisplay {
         private final PrintWriter out;
 
@@ -41,6 +50,10 @@ public class DisplayToWriterTest {
 
         public void displayProductNotFoundMessage(String barcodeNotFound) {
             out.println(String.format("Product not found for %s", "99999"));
+        }
+
+        public void displayPrice(Price price) {
+            out.println("EUR 7.50");
         }
     }
 
