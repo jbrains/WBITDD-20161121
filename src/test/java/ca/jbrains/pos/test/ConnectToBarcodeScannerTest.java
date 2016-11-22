@@ -1,5 +1,9 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.BarcodeScannedListener;
+import ca.jbrains.pos.ConsumeTextCommands;
+import ca.jbrains.pos.InterpretAllCommandsAsBarcodes;
+import ca.jbrains.pos.ParseCommandsByFilteringWhitespace;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;

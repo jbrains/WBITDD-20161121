@@ -1,4 +1,4 @@
-package ca.jbrains.pos.test;
+package ca.jbrains.pos;
 
 public class InterpretAllCommandsAsBarcodes implements InterpretCommand {
     private BarcodeScannedListener barcodeScannedListener;

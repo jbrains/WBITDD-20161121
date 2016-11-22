@@ -1,11 +1,10 @@
 package ca.jbrains.pos.test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import ca.jbrains.pos.Catalog;
+import ca.jbrains.pos.InMemoryCatalog;
+import ca.jbrains.pos.Price;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 public class FindPriceInMemoryCatalogTest extends FindPriceInCatalogContract {
 
@@ -27,15 +26,4 @@ public class FindPriceInMemoryCatalogTest extends FindPriceInCatalogContract {
         }});
     }
 
-    public static class InMemoryCatalog implements Catalog {
-        private final Map<String, Price> pricesByBarcode;
-
-        public InMemoryCatalog(Map<String, Price> pricesByBarcode) {
-            this.pricesByBarcode = pricesByBarcode;
-        }
-
-        public Price findPrice(String barcode) {
-            return pricesByBarcode.get(barcode);
-        }
-    }
 }
