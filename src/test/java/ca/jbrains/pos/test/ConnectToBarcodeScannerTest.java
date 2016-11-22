@@ -12,6 +12,7 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ConnectToBarcodeScannerTest {
     @Rule
@@ -115,11 +116,23 @@ public class ConnectToBarcodeScannerTest {
         consumeTextCommand(new StringReader(unlines(textCommands)));
     }
 
-    private void consumeTextCommand(Reader commandSource) {
-        new BufferedReader(commandSource).lines()
+    public void consumeTextCommand(Reader commandSource) {
+        parseCommands(commandSource)
+                .forEach(this::interpretCommand);
+    }
+
+    public Stream<String> parseCommands(Reader commandSource) {
+        return sanitizeCommands(new BufferedReader(commandSource).lines());
+    }
+
+    public void interpretCommand(String commandText) {
+        barcodeScannedListener.onBarcode(commandText);
+    }
+
+    public Stream<String> sanitizeCommands(Stream<String> commandStream) {
+        return commandStream
                 .map(String::trim)
-                .filter((line) -> !line.isEmpty())
-                .forEach(barcodeScannedListener::onBarcode);
+                .filter((line) -> !line.isEmpty());
     }
 
     public interface BarcodeScannedListener {
