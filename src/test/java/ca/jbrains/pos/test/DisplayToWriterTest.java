@@ -61,6 +61,7 @@ public class DisplayToWriterTest {
         }
     }
 
+    // REFACTOR Isn't there a library function for this?!
     public static List<String> lines(String text) {
         return Arrays.asList(text.split(System.lineSeparator()));
     }
