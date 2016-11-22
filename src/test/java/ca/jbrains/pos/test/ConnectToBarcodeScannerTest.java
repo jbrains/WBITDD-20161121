@@ -38,6 +38,7 @@ public class ConnectToBarcodeScannerTest {
     }
 
     // REFACTOR Isn't there a library function for this?!
+    // RISK Should there be a trailing line separator here?
     public static String unlines(List<String> linesOfText) {
         return String.join(System.lineSeparator(), linesOfText);
     }
