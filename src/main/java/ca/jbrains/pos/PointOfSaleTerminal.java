@@ -16,7 +16,12 @@ public class PointOfSaleTerminal {
                                             put("7070529026686", Price.cents(195));
                                         }}
                                 ),
-                                new WriterDisplay(new PrintWriter(new OutputStreamWriter(System.out), true))
+                                new WriterDisplay(
+                                        new PrintWriter(
+                                                new OutputStreamWriter(System.out),
+                                                true
+                                        )
+                                )
                         )
                 )
         ).consumeTextCommands(new InputStreamReader(System.in));
